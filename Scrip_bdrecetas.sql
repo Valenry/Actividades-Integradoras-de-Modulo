@@ -28,3 +28,32 @@ CREATE INDEX `fk_recetas_productos1_idx` ON `actividad3`.`recetas` (`productos_i
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+use actividad3;
+
+INSERT INTO recetas (insumo_id_insumo, productos_id_producto, cantidad_requerida)
+SELECT i.id_insumo, p.id_producto, '500 g'
+FROM insumos i
+JOIN productos p ON p.nombre = 'medialuna'
+WHERE i.nombre IN ('harina', 'manteca', 'azucar');
+
+
+INSERT INTO recetas (insumo_id_insumo, productos_id_producto, cantidad_requerida)
+SELECT i.id_insumo, p.id_producto, '1 kg'
+FROM insumos i
+JOIN productos p ON p.nombre = 'pan'
+WHERE i.nombre IN ('harina', 'sal', 'levadura');
+
+
+INSERT INTO recetas (insumo_id_insumo, productos_id_producto, cantidad_requerida)
+SELECT i.id_insumo, p.id_producto, '800 g'
+FROM insumos i
+JOIN productos p ON p.nombre = 'criollos'
+WHERE i.nombre IN ('harina', 'manteca', 'sal', 'levadura');
+
+
+INSERT INTO recetas (insumo_id_insumo, productos_id_producto, cantidad_requerida)
+SELECT i.id_insumo, p.id_producto, '1 kg'
+FROM insumos i
+JOIN productos p ON p.nombre = 'tartas'
+WHERE i.nombre IN ('harina', 'huevo', 'azucar', 'manteca');
+
