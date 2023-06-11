@@ -1,0 +1,79 @@
+import mysql.connector
+
+class Conexion:
+    def __init__(self):
+        self.conexion = mysql.connector.connect(
+            user='root',
+            password='xxxx',
+            host='localhost',
+            database='actividad3',
+            port='3306'
+        )
+
+    def conectar(self):
+        try:
+            self.conexion.connect()
+            print("Conexión exitosa a la base de datos")
+        except mysql.connector.Error as error:
+            print("Error al conectar a la base de datos:", error)
+
+    def cerrar_conexion(self):
+        self.conexion.close()
+        print("Conexión cerrada")
+
+conexion = Conexion()
+
+class Productos:
+    def __init__(self, conexion):
+        self.conexion = conexion
+
+    def insertar_producto(self, id_producto, nombre):
+        cursor = self.conexion.cursor()
+        try:
+            query = "INSERT INTO productos (id_producto, nombre) VALUES (%s, %s)"
+            valores = (id_producto, nombre)
+            cursor.execute(query, valores)
+            self.conexion.commit()
+            print("Producto insertado correctamente")
+        except mysql.connector.Error as error:
+            print("Error al insertar el producto:", error)
+        finally:
+            cursor.close()
+
+    def seleccionar_productos(self):
+        cursor = self.conexion.cursor()
+        try:
+            query = "SELECT * FROM productos"
+            cursor.execute(query)
+            resultados = cursor.fetchall()
+            print("Productos:")
+            for resultado in resultados:
+                id_producto, nombre = resultado
+                print("ID producto:", id_producto)
+                print("Nombre:", nombre)
+                print("--------")
+        except mysql.connector.Error as error:
+            print("Error al seleccionar los productos:", error)
+        finally:
+            cursor.close()
+
+
+conexion = Conexion()
+
+
+
+conexion.conectar()
+
+
+productos_manager = Productos(conexion.conexion)
+
+
+
+productos_manager.insertar_producto('1', 'Pan')
+
+
+productos_manager.seleccionar_productos()
+
+
+
+conexion.cerrar_conexion()
