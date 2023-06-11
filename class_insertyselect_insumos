@@ -1,0 +1,81 @@
+import mysql.connector
+
+class Conexion:
+    def __init__(self):
+        self.conexion = mysql.connector.connect(
+            user='root',
+            password='liam2011',
+            host='localhost',
+            database='actividad3',
+            port='3306'
+        )
+
+    def conectar(self):
+        try:
+            self.conexion.connect()
+            print("Conexión exitosa a la base de datos")
+        except mysql.connector.Error as error:
+            print("Error al conectar a la base de datos:", error)
+
+    def cerrar_conexion(self):
+        self.conexion.close()
+        print("Conexión cerrada")
+
+conexion = Conexion()
+
+class Insumos:
+    def __init__(self, conexion):
+        self.conexion = conexion
+
+    def insertar_insumo(self, nombre, cantidad):
+        cursor = self.conexion.cursor()
+        try:
+            query = "INSERT INTO insumos (nombre, cantidad) VALUES (%s, %s)"
+            valores = (nombre, cantidad)
+            cursor.execute(query, valores)
+            self.conexion.commit()
+            print("Insumo insertado correctamente")
+        except mysql.connector.Error as error:
+            print("Error al insertar el insumo:", error)
+        finally:
+            cursor.close()
+
+    def seleccionar_insumos(self):
+        cursor = self.conexion.cursor()
+        try:
+            query = "SELECT * FROM insumos"
+            cursor.execute(query)
+            resultados = cursor.fetchall()
+            print("Insumos:")
+            for resultado in resultados:
+                id_insumo, nombre, cantidad = resultado
+                print("ID insumo:", id_insumo)
+                print("Nombre:", nombre)
+                print("Cantidad:", cantidad)
+                print("--------")
+        except mysql.connector.Error as error:
+            print("Error al seleccionar los insumos:", error)
+        finally:
+            cursor.close()
+
+
+conexion = Conexion()
+
+
+
+conexion.conectar()
+
+
+insumos_manager = Insumos(conexion.conexion)
+
+
+
+insumos_manager.insertar_insumo('harina', '10 kg')
+
+
+insumos_manager.seleccionar_insumos()
+
+
+
+conexion.cerrar_conexion()
+
