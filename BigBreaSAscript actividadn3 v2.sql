@@ -10,13 +10,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema actividad3
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `actividad3` ;
+DROP SCHEMA IF EXISTS `actividad3`;
 
 -- -----------------------------------------------------
 -- Schema actividad3
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `actividad3` DEFAULT CHARACTER SET utf8 ;
-USE `actividad3` ;
+CREATE SCHEMA IF NOT EXISTS `actividad3` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `actividad3`;
 
 -- -----------------------------------------------------
 -- Table `actividad3`.`productos`
@@ -24,9 +24,11 @@ USE `actividad3` ;
 CREATE TABLE IF NOT EXISTS `actividad3`.`productos` (
   `id_producto` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_producto`))
-ENGINE = InnoDB;
-
+  PRIMARY KEY (`id_producto`)
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `actividad3`.`produccion_diaria`
@@ -41,22 +43,26 @@ CREATE TABLE IF NOT EXISTS `actividad3`.`produccion_diaria` (
     FOREIGN KEY (`productos_id_producto`)
     REFERENCES `actividad3`.`productos` (`id_producto`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 CREATE INDEX `fk_produccion_diaria_productos1_idx` ON `actividad3`.`produccion_diaria` (`productos_id_producto` ASC) VISIBLE;
 
-
 -- -----------------------------------------------------
--- Table `actividad3`.`insumo`
+-- Table `actividad3`.`insumos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `actividad3`.`insumo` (
+CREATE TABLE IF NOT EXISTS `actividad3`.`insumos` (
   `id_insumo` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `cantidad` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_insumo`))
-ENGINE = InnoDB;
-
+  PRIMARY KEY (`id_insumo`)
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `actividad3`.`recetas`
@@ -69,20 +75,21 @@ CREATE TABLE IF NOT EXISTS `actividad3`.`recetas` (
   PRIMARY KEY (`id_recetas`),
   CONSTRAINT `fk_recetas_insumo`
     FOREIGN KEY (`insumo_id_insumo`)
-    REFERENCES `actividad3`.`insumo` (`id_insumo`)
+    REFERENCES `actividad3`.`insumos` (`id_insumo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_recetas_productos1`
     FOREIGN KEY (`productos_id_producto`)
     REFERENCES `actividad3`.`productos` (`id_producto`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 CREATE INDEX `fk_recetas_insumo_idx` ON `actividad3`.`recetas` (`insumo_id_insumo` ASC) VISIBLE;
-
 CREATE INDEX `fk_recetas_productos1_idx` ON `actividad3`.`recetas` (`productos_id_producto` ASC) VISIBLE;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
