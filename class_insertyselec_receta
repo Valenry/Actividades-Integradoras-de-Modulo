@@ -1,0 +1,70 @@
+import mysql.connector
+
+class Conexion:
+    def __init__(self):
+        self.conexion = mysql.connector.connect(
+            user='root',
+            password='root',
+            host='localhost',
+            database='actividad3',
+            port='3306'
+        )
+
+    def conectar(self):
+        try:
+            self.conexion.connect()
+            print("Conexión exitosa a la base de datos")
+        except mysql.connector.Error as error:
+            print("Error al conectar a la base de datos:", error)
+
+    def cerrar_conexion(self):
+        self.conexion.close()
+        print("Conexión cerrada")
+
+conexion = Conexion()
+
+class Recetas:
+    def __init__(self, conexion):
+        self.conexion = conexion
+
+    def insertar_receta(self, insumo_id, producto_id, cantidad_requerida):
+        cursor = self.conexion.conexion.cursor()
+        try:
+            query = "INSERT INTO recetas (insumo_id_insumo, productos_id_producto, cantidad_requerida) VALUES (%s, %s, %s)"
+            valores = (insumo_id, producto_id, cantidad_requerida)
+            cursor.execute(query, valores)
+            self.conexion.conexion.commit()
+            print("Receta insertada correctamente")
+        except mysql.connector.Error as error:
+            print("Error al insertar la receta:", error)
+        finally:
+            cursor.close()
+
+    def seleccionar_recetas(self):
+        cursor = self.conexion.conexion.cursor()
+        try:
+            query = "SELECT * FROM recetas"
+            cursor.execute(query)
+            resultados = cursor.fetchall()
+            print("Recetas:")
+            for resultado in resultados:
+                id_receta, insumo_id, producto_id, cantidad_requerida = resultado
+                print("ID receta:", id_receta)
+                print("ID insumo:", insumo_id)
+                print("ID producto:", producto_id)
+                print("Cantidad requerida:", cantidad_requerida)
+                print("--------")
+        except mysql.connector.Error as error:
+            print("Error al seleccionar las recetas:", error)
+        finally:
+            cursor.close()
+
+conexion = Conexion()
+conexion.conectar()
+
+recetas_manager = Recetas(conexion)
+recetas_manager.insertar_receta(1, 1, "100 gramos")
+recetas_manager.insertar_receta(2, 2, "2 unidades")
+recetas_manager.seleccionar_recetas()
+
+conexion.cerrar_conexion()
