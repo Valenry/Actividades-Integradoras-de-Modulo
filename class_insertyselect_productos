@@ -59,21 +59,12 @@ class Productos:
 
 
 conexion = Conexion()
-
-
-
 conexion.conectar()
 
 
 productos_manager = Productos(conexion.conexion)
-
-
-
-productos_manager.insertar_producto('1', 'Pan')
-
-
+productos_manager.insertar_producto('9', 'Pan casero')
 productos_manager.seleccionar_productos()
-
 
 
 conexion.cerrar_conexion()
