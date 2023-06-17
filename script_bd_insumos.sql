@@ -1,14 +1,17 @@
 use actividad3;
 -- -----------------------------------------------------
--- Table `actividad3`.`insumos`
+-- Table `big_bread_productos`.`insumos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `insumos` (
-  `id_insumo` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  `cantidad` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_insumo`)
-)
-ENGINE = InnoDB;
+CREATE TABLE insumos (
+  id_insumo INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(50) NOT NULL,
+  descripcion VARCHAR(255),
+  precio DECIMAL(10,2),
+  cantidad INT,
+  proveedor VARCHAR(50)
+);
+
+
 
 -- INSERT Y SELECT TABLA INSUMOS
 
