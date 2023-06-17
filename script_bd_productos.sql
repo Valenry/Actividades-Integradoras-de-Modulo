@@ -1,39 +1,15 @@
-use actividad3;
--- -----------------------------------------------------
--- Table `actividad3`.`productos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS actividad3.productos (
-id_producto INT NOT NULL AUTO_INCREMENT,
-nombre VARCHAR(45) NOT NULL,
-PRIMARY KEY (id_producto))
-ENGINE = InnoDB;
+USE big_bread_production;
 
+CREATE TABLE productos (
+  id_producto INT PRIMARY KEY AUTO_INCREMENT,
+  codigo_barras VARCHAR(50),
+  nombre VARCHAR(50) NOT NULL,
+  descripcion VARCHAR(255),
+  stock INT,
+  precio DECIMAL(10,2),
+  unidad_medida VARCHAR(50),
+  fecha_creacion DATE,
+  peso_unitario DECIMAL(10,2)
+);
 
 _________________________________________________________
-
-
-use actividad3;
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('1','Pan');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('2','Medialunas');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('3','Criollos');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('4','Tortas');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('5','Tartas');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('6','Masas finas');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('7','Grisines');
-
-INSERT INTO productos (id_producto,nombre)VALUES
-('8','Croissants');
