@@ -12,6 +12,7 @@ CREATE TABLE insumos (
 );
 
 
+
 -- INSERT Y SELECT TABLA INSUMOS
 
 use actividad3;
