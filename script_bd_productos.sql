@@ -12,4 +12,3 @@ CREATE TABLE productos (
   peso_unitario DECIMAL(10,2)
 );
 
-_________________________________________________________
