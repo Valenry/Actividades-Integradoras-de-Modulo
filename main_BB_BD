@@ -10,4 +10,5 @@ if variableAuxiliar == 1:
     conn.conectar()
 else:
     print("La Base de Datos ha sido cerrada")
+    
 
