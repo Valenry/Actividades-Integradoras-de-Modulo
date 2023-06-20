@@ -60,21 +60,12 @@ class Insumos:
 
 
 conexion = Conexion()
-
-
-
 conexion.conectar()
 
 
 insumos_manager = Insumos(conexion.conexion)
-
-
-
 insumos_manager.insertar_insumo('harina', '10 kg')
-
-
 insumos_manager.seleccionar_insumos()
-
 
 
 conexion.cerrar_conexion()
