@@ -1,32 +1,19 @@
--- -----------------------------------------------------
--- Table `actividad3`.`produccion_diaria`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `actividad3`.`produccion_diaria` (
-  `id_produccion_diaria` INT NOT NULL AUTO_INCREMENT,
-  `productos_id_producto` INT NOT NULL,
-  `fecha` VARCHAR(30) NOT NULL,
-  `cantidad_producida` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_produccion_diaria`),
-  CONSTRAINT `id_producto`
-    FOREIGN KEY (`productos_id_producto`)
-    REFERENCES `actividad3`.`productos` (`id_producto`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_produccion_diaria_productos1_idx` ON `actividad3`.`produccion_diaria` (`productos_id_producto` ASC) VISIBLE;
-
-
-use actividad3;
-INSERT INTO `actividad3`.`produccion_diaria` (`productos_id_producto`, `fecha`, `cantidad_producida`)
+use big_bread_production;
+/*INSERT INTO produccion_diaria (fecha, id_producto, cantidad_producida, estado_produccion)
 VALUES
-(1, '2023-06-01', '100'),
-(2, '2023-06-01', '50'),
-(3, '2023-06-01', '75'),
-(4, '2023-06-01', '60'),
-(5, '2023-06-01', '80'),
-(6, '2023-06-01', '90'),
-(7, '2023-06-01', '40'),
-(8, '2023-06-01', '70');
+  ('<fecha_1>', (SELECT id_producto FROM productos WHERE codigo_barras = '<codigo_barras_1>'), <cantidad_1>, '<estado_1>'),*/
 
-SELECT * FROM actividad3.produccion_diaria;
+INSERT INTO produccion_diaria (fecha, id_producto, cantidad_producida, estado_produccion)
+VALUES
+  ('2022-01-01', (SELECT id_producto FROM productos WHERE codigo_barras = '1234567890'), 100, 'En producción'),
+  ('2022-02-01', (SELECT id_producto FROM productos WHERE codigo_barras = '2345678901'), 50, 'En producción'),
+  ('2022-03-01', (SELECT id_producto FROM productos WHERE codigo_barras = '3456789012'), 75, 'Finalizado'),
+  ('2022-04-01', (SELECT id_producto FROM productos WHERE codigo_barras = '4567890123'), 60, 'En producción'),
+  ('2022-05-01', (SELECT id_producto FROM productos WHERE codigo_barras = '5678901234'), 40, 'Finalizado'),
+  ('2022-06-01', (SELECT id_producto FROM productos WHERE codigo_barras = '6789012345'), 80, 'En producción');
+  
+  SELECT pd.id_produccion_diaria, pd.fecha, p.nombre, pd.cantidad_producida, pd.estado_produccion
+FROM produccion_diaria pd
+JOIN productos p ON pd.id_producto = p.id_producto;
+  
+  
