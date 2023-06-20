@@ -53,6 +53,17 @@ VALUES
   
   SELECT * FROM insumos;
 
+UPDATE insumos
+SET nombre = CONCAT(nombre, '_', id_insumo)
+WHERE id_insumo IN (
+  SELECT id_insumo
+  FROM (
+    SELECT MIN(id_insumo) AS id_insumo
+    FROM insumos
+    GROUP BY nombre
+    HAVING COUNT(*) > 1
+  ) AS duplicates
+);
 
 
 
