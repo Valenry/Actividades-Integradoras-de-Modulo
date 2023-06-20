@@ -1,0 +1,58 @@
+from colorama import init, Fore
+import classconectionbigbread as Conector
+
+# Colorama
+init()
+
+print("Para conectarse a la Base de Datos, presione 1")
+print("Para cerrar la Base de Datos, presione 2")
+
+opcion = int(input())
+
+if opcion == 1:
+    conn = Conector.Conexion()
+    conn.conectar()
+else:
+    print("La Base de Datos ha sido cerrada")
+
+while True:
+    print("\n" + Fore.BLUE + "+-------------------------------------------+")
+    print("|" + Fore.BLUE + "               BIG BREAD S.A           " + Fore.BLUE + "|")
+    print("+" + Fore.BLUE + "-------------------------------------------+" + Fore.RESET + "\n")
+    print("")
+    print("MENÚ PRINCIPAL\n")
+    print("1 - GESTIONAR INSUMOS")
+    print("2 - GESTIONAR PRODUCTOS")
+    print("3 - GESTIONAR PRODUCCIÓN DIARIA")
+    print("4 - GESTIONAR RECETAS")
+    print("5 - OTRA OPCIÓN")
+    print("6 - SALIR")
+    print("\n")
+    opcion = int(input("Ingrese su opción: "))
+
+    if opcion == 1:
+        from controladorinsumos import ControladorInsumos
+        controlador_insumos = ControladorInsumos()
+        controlador_insumos.menu()
+    elif opcion == 2:
+        from controladorproductos import ControladorProductos
+        controlador_productos = ControladorProductos()
+        controlador_productos.menu()
+    elif opcion == 3:
+        from controladorproducciondiaria import ControladorProduccionDiaria
+        controlador_produccion_diaria = ControladorProduccionDiaria()
+        controlador_produccion_diaria.menu()
+    elif opcion == 4:
+        from controladorrecetas import ControladorRecetas
+        controlador_recetas = ControladorRecetas()
+        controlador_recetas.menu()
+    elif opcion == 5:
+        # Lógica para OTRA OPCIÓN
+        pass
+    elif opcion == 6:
+        # Salir
+        conn.cerrar_conexion()
+        print(Fore.GREEN + "¡Nos vemos ;)!" + Fore.RESET)
+        break
+    else:
+        print(Fore.RED + "¡Opción incorrecta!" + Fore.RESET)
