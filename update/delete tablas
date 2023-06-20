@@ -1,0 +1,24 @@
+use big_bread_production;
+
+ -- UPDATE en la tabla insumos
+UPDATE insumos SET descripcion = 'Nueva Descripción' WHERE id_insumo = 1;
+
+-- DELETE en la tabla insumos
+DELETE FROM insumos WHERE id_insumo = 1;
+
+-- UPDATE en la tabla productos
+UPDATE productos SET nombre = 'Nuevo Nombre' WHERE id_producto = 1;
+
+-- DELETE en la tabla productos
+DELETE FROM productos WHERE id_producto = 1;
+
+-- UPDATE en la tabla produccion_diaria
+UPDATE produccion_diaria SET cantidad_producida = 200 WHERE id_produccion_diaria = 1;
+
+-- DELETE en la tabla produccion_diaria
+DELETE FROM produccion_diaria WHERE id_produccion_diaria = 1;
+
+UPDATE recetas SET cantidad_requerida = 1000 WHERE id_receta = 1;
+
+-- DELETE en la tabla recetas
+DELETE FROM recetas WHERE id_receta = 1;
