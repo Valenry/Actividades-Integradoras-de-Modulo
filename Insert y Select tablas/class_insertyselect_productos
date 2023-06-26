@@ -1,1 +1,101 @@
+import mysql.connector
 
+class Conexion:
+    def __init__(self):
+        self.conexion = mysql.connector.connect(
+            user='root',
+            password='****',
+            host='localhost',
+            database='big_bread_production',
+            port='3306'
+        )
+
+    def conectar(self):
+        try:
+            self.conexion.connect()
+            print("Conexión exitosa a la base de datos")
+        except mysql.connector.Error as error:
+            print("Error al conectar a la base de datos:", error)
+
+    def cerrar_conexion(self):
+        self.conexion.close()
+        print("Conexión cerrada")
+
+class Producto:
+    ID = 0
+    CodigoBarras = ""
+    Nombre = ""
+    Descripcion = ""
+    Stock = 0
+    Precio = 0.0
+    UnidadMedida = ""
+    FechaCreacion = ""
+    PesoUnitario = 0.0
+
+    def __init__(self, codigo_barras, nombre, descripcion, stock, precio, unidad_medida, fecha_creacion, peso_unitario):
+        self.CodigoBarras = codigo_barras
+        self.Nombre = nombre
+        self.Descripcion = descripcion
+        self.Stock = stock
+        self.Precio = precio
+        self.UnidadMedida = unidad_medida
+        self.FechaCreacion = fecha_creacion
+        self.PesoUnitario = peso_unitario
+
+    def insertar_producto(self):
+        try:
+            conexion = Conexion()
+            conexion.conectar()
+            cursor = conexion.conexion.cursor()
+            sql = "INSERT INTO productos (codigo_barras, nombre, descripcion, stock, precio, unidad_medida, fecha_creacion, peso_unitario) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            valores = (self.CodigoBarras, self.Nombre, self.Descripcion, self.Stock, self.Precio, self.UnidadMedida, self.FechaCreacion, self.PesoUnitario)
+            cursor.execute(sql, valores)
+            conexion.conexion.commit()
+            print("Producto insertado correctamente")
+        except mysql.connector.Error as error:
+            print("Error al insertar el producto:", error)
+        finally:
+            conexion.cerrar_conexion()
+
+    def seleccionar_productos():
+        try:
+            conexion = Conexion()
+            conexion.conectar()
+            cursor = conexion.conexion.cursor()
+            sql = "SELECT * FROM productos"
+            cursor.execute(sql)
+            productos = cursor.fetchall()
+            for producto in productos:
+                print("ID:", producto[0])
+                print("Código de Barras:", producto[1])
+                print("Nombre:", producto[2])
+                print("Descripción:", producto[3])
+                print("Stock:", producto[4])
+                print("Precio:", producto[5])
+                print("Unidad de Medida:", producto[6])
+                print("Fecha de Creación:", producto[7])
+                print("Peso Unitario:", producto[8])
+                print("------------------------")
+        except mysql.connector.Error as error:
+            print("Error al seleccionar los productos:", error)
+        finally:
+            conexion.cerrar_conexion()
+
+
+# Ejemplo de inserción de productos
+productos = [
+    ('1234567890', 'Pan', 'Pan hecho con harina de trigo', 50, 2.99, 'kilo', '2022-01-01', 0.5),
+    ('2345678901', 'Torta', 'Torta de chocolate con crema', 20, 12.99, 'unidad', '2022-02-01', 1.5),
+    ('3456789012', 'Galletas', 'Galletas con avena y pasas', 30, 5.99, 'paquete', '2022-03-01', 0.2),
+    ('4567890123', 'Croissant', 'croissant relleno pulpa de frutilla', 40, 2.49, 'unidad', '2022-04-01', 0.1),
+    ('5678901234', 'Bizcochuelo', 'Bizcochuelo de vainilla con glaseado', 25, 8.99, 'unidad', '2022-05-01', 1.0),
+    ('6789012345', 'Masas finas', 'Masas finas de manteca', 15, 4.99, 'kilo', '2022-06-01', 0.3)
+]
+
+for producto in productos:
+    codigo_barras, nombre, descripcion, stock, precio, unidad_medida, fecha_creacion, peso_unitario = producto
+    nuevo_producto = Producto(codigo_barras, nombre, descripcion, stock, precio, unidad_medida, fecha_creacion, peso_unitario)
+    nuevo_producto.insertar_producto()
+
+# Ejemplo de selección de productos
+Producto.seleccionar_productos()
